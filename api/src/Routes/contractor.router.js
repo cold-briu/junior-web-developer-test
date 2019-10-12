@@ -1,11 +1,11 @@
 const router = require('express').Router()
-const StakeholderService = require('../Services/stakeholder.service')
-const stakeholderService = new StakeholderService()
+const ContractorService = require('../Services/contractor.service')
+const contractorService = new ContractorService()
 
 router.route('/')
     .get(async (req, res, next) => {
         try {
-            let data = await stakeholderService.getAll()
+            let data = await contractorService.getAll()
             res.status(200).send(data).end()
         } catch (error) {
             console.error("!!! err on get all", error)
@@ -15,7 +15,7 @@ router.route('/')
     })
     .post(async (req, res, next) => {
         try {
-            let id = await stakeholderService.create(req.body)
+            let id = await contractorService.create(req.body)
             res.status(200).send(id).end()
         } catch (error) {
             console.error("!!! err on create", error)
@@ -28,7 +28,7 @@ router.route('/')
 router.route('/:id')
     .get(async (req, res, next) => {
         try {
-            let data = await stakeholderService.getOne(req.params.id)
+            let data = await contractorService.getOne(req.params.id)
             res.status(200).send(data).end()
         } catch (error) {
             console.error("!!! err on get one", error)
@@ -38,7 +38,7 @@ router.route('/:id')
     })
     .put(async (req, res, next) => {
         try {
-            let id = await stakeholderService.update(req.params.id, req.body)
+            let id = await contractorService.update(req.params.id, req.body)
 
             res.status(200).send(id).end()
         } catch (error) {
@@ -49,7 +49,7 @@ router.route('/:id')
     })
     .delete(async (req, res, next) => {
         try {
-            let id = await stakeholderService.delete(req.params.id)
+            let id = await contractorService.delete(req.params.id)
             res.status(200).send(id).end()
         } catch (error) {
             console.error("!!! err on delete", error)
@@ -60,16 +60,16 @@ router.route('/:id')
 
 router.route('/associateEmployee/:id')
     .put(async (req, res, next) => {
-try {
-    
-    let updatedId=  await stakeholderService.associateEmployee(req.params.id,req.body)
-    res.status(200).send(updatedId).end()
+        try {
 
-} catch (error) {
-    console.error("!!! err on delete", error)
-    res.status(500).send("error ocurred on associate").end()
-    next()
-}
+            let updatedId = await contractorService.associateEmployee(req.params.id, req.body)
+            res.status(200).send(updatedId).end()
+
+        } catch (error) {
+            console.error("!!! err on delete", error)
+            res.status(500).send("error ocurred on associate").end()
+            next()
+        }
 
     })
 

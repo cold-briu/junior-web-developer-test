@@ -10,6 +10,6 @@ module.exports = {
     dbName: process.env.DB_NAME,
 
     employeeCollectionName: process.env.DB_EMPLOYEE_COLLECTION,
-    stakeholderCollectionName: process.env.DB_STAKEHOLDER_COLLECTION,
+    contractorCollectionName: process.env.DB_CONTRACTOR_COLLECTION,
     userCollectionName: process.env.DB_USERS_COLLECTION,
 };

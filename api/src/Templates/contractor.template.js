@@ -1,6 +1,6 @@
-const Joi = require('@hapi/joi');
+const Joi = require("@hapi/joi");
 
-exports.validateEmployeeTemplate = function (data) {
+exports.validateContractorTemplate = function (data) {
     return Joi.object({
 
         name: Joi.string()
@@ -25,8 +25,10 @@ exports.validateEmployeeTemplate = function (data) {
         email: Joi.string()
             .required(),
 
-        aviliable: Joi.boolean()
+        company: Joi.string()
             .required(),
+
+        jobList: Joi.array()
 
     });
 }
