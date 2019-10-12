@@ -1,5 +1,5 @@
 const { MongoClient, ObjectId } = require("mongodb");
-const { dbName, dbPassword, dbUser, dbHost } = require("../config/config");
+const { dbName, dbPassword, dbUser, dbHost } = require('../../Config/main.config');
 
 const MONGO_URI = `mongodb+srv://${dbUser}:${dbPassword}@${dbHost}/test?retryWrites=true&w=majority`;
 
@@ -45,8 +45,6 @@ module.exports = class MongoLib {
         );
     }
 
-
-
     createMany(collection, arrayData) {
         return this.connect()
             .then(db => 
@@ -59,21 +57,20 @@ module.exports = class MongoLib {
             .then(db => 
                 db.collection(collection)
                     .findOneAndUpdate(
-                        { _id: ObjectId(id) },
+                        { _id: ObjectId(id)},
                         {
-                            $set: data,
-                            updated_timestamp: new Date().getTime()
+                            $set: {...data, updated_timestamp: new Date().getTime()}
                         },
                         { upsert: true }
                     ))
-            .then(result => result.upsertedId);
+            .then(result => result.value._id);
     }
 
-    delete(collection, id) {
+    delete(collection, id) { 
         return this.connect()
             .then(db => 
                 db.collection(collection)
-                    .findOneAndDelete({ _id: ObjectId(id) }) )
-            .then(() => id);
+                    .deleteOne({_id: ObjectId(id)}) )
+            .then(result => result.value._id);
     }
 }
