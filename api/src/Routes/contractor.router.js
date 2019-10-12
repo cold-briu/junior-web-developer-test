@@ -1,5 +1,11 @@
 const router = require('express').Router()
+
+const checkDataTypes = require('../Middlewares/checkDataTypes.middlware')
 const ContractorService = require('../Services/contractor.service')
+
+const jobTemplate = require('../Templates/job.template')
+const contractorTemplate = require('../Templates/contractor.template')
+
 const contractorService = new ContractorService()
 
 router.route('/')
@@ -13,16 +19,18 @@ router.route('/')
             next()
         }
     })
-    .post(async (req, res, next) => {
-        try {
-            let id = await contractorService.create(req.body)
-            res.status(200).send(id).end()
-        } catch (error) {
-            console.error("!!! err on create", error)
-            res.status(500).send("error ocurred on create").end()
-            next()
-        }
-    });
+    .post(
+        checkDataTypes(contractorTemplate),
+        async (req, res, next) => {
+            try {
+                let id = await contractorService.create(req.validatedData)
+                res.status(200).send(id).end()
+            } catch (error) {
+                console.error("!!! err on create", error)
+                res.status(500).send("error ocurred on create").end()
+                next()
+            }
+        });
 
 
 router.route('/:id')
@@ -58,19 +66,32 @@ router.route('/:id')
         }
     });
 
-router.route('/associateEmployee/:id')
-    .put(async (req, res, next) => {
-        try {
+router.route('/associateEmployee/:contractorId')
+    .put(
+        checkDataTypes(jobTemplate),
+        async (req, res, next) => {
+            try {
 
-            let updatedId = await contractorService.associateEmployee(req.params.id, req.body)
-            res.status(200).send(updatedId).end()
+                let updatedId = await contractorService.associateEmployee(req.params.contractorId, req.validatedData)
+                res.status(200).send(updatedId).end()
 
-        } catch (error) {
-            console.error("!!! err on delete", error)
-            res.status(500).send("error ocurred on associate").end()
-            next()
-        }
+            } catch (error) {
+                console.error("!!! err on asociate", error)
+                res.status(500).send("error ocurred on associate").end()
+                next()
+            }
 
-    })
+        })
+    .post(
+        async (req, res, next) => {
+            try {
+                let updatedId = await contractorService.removeEmployee(req.params.contractorId, req.body.employeeId)
+                res.status(200).send(updatedId).end()
+            } catch (error) {
+                console.error("!!! err on delete asociate", error)
+                res.status(500).send("error ocurred on delete associate").end()
+                next()
+            }
+        });
 
 module.exports = router

@@ -7,6 +7,9 @@ ____
 
     Everything is tied up 
 
+#### 0.5 Utils Folder: 
+    Helps creation and operation of every layer (schemas, services, etc)
+
 ### 1. Core: Templates folder
 
     Entities are defined
@@ -16,11 +19,8 @@ ____
 
     Entities are manipulated (also known as Controllers)
 
-#### 2.5 Utils Folder: 
-Helps creation and operation of Services
-
 #### 2.5 Midlewares Folder: 
-Helps communication between Services and higher layers (such as entrypoints)
+    Helps communication between Services and higher layers (such as entrypoints)
 
 ### 3. Data Providers: Lib folder
 

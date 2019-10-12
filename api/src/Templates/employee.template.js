@@ -1,7 +1,8 @@
 const Joi = require('@hapi/joi');
+const joiSchema = require('../Utils/createJoiSchema.util')
 
-exports.validateEmployeeTemplate = function (data) {
-    return Joi.object({
+module.exports = (data) => {
+    return new joiSchema({
 
         name: Joi.string()
             .required(),
@@ -23,10 +24,11 @@ exports.validateEmployeeTemplate = function (data) {
             .required(),
 
         email: Joi.string()
+            .email()
             .required(),
 
         aviliable: Joi.boolean()
-            .required(),
+            .default(true),
 
-    });
+    }).validate(data);
 }

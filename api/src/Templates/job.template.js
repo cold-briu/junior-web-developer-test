@@ -1,7 +1,9 @@
 const Joi = require("@hapi/joi");
+const joiSchema = require('../Utils/createJoiSchema.util')
 
-exports.validateJobTemplate = function (data) {
-    return Joi.object({
+module.exports = (data) => {
+    return new joiSchema({
+
         jobName: Joi.string()
             .required(),
 
@@ -14,7 +16,7 @@ exports.validateJobTemplate = function (data) {
 
         startDate: Joi.number()
             .integer()
-            .required(),
+            .default(0),
 
         deadLine: Joi.number()
             .integer()
@@ -22,10 +24,10 @@ exports.validateJobTemplate = function (data) {
 
         endDate: Joi.number()
             .integer()
-            .required(),
+            .default(Date.now()),
 
         active: Joi.boolean()
-            .required(),
+            .default(true),
 
-    });
+    }).validate(data);
 }

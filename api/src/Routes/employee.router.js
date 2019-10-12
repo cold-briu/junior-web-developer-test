@@ -1,5 +1,9 @@
 const router = require('express').Router()
+
+const checkDataTypes = require('../Middlewares/checkDataTypes.middlware')
 const EmployeeService = require('../Services/employee.service')
+
+const employeeTemplate = require('../Templates/employee.template')
 const employeeService = new EmployeeService()
 
 
@@ -16,16 +20,18 @@ router.route('/')
             next()
         }
     })
-    .post(async (req, res, next) => {
-        try {
-            let id = await employeeService.create(req.body)
-            res.status(200).send(id).end()
-        } catch (error) {
-            console.error("!!! err on create", error)
-            res.status(500).send("error ocurred on create").end()
-            next()
-        }
-    });
+    .post(
+        checkDataTypes(employeeTemplate),
+        async (req, res, next) => {
+            try {
+                let id = await employeeService.create(req.validatedData)
+                res.status(200).send(id).end()
+            } catch (error) {
+                console.error("!!! err on create", error)
+                res.status(500).send("error ocurred on create").end()
+                next()
+            }
+        });
 
 
 router.route('/:id')

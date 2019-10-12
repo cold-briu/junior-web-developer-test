@@ -1,7 +1,8 @@
 const Joi = require("@hapi/joi");
+const joiSchema = require('../Utils/createJoiSchema.util')
 
-exports.validateContractorTemplate = function (data) {
-    return Joi.object({
+module.exports = (data) => {
+    return new joiSchema({
 
         name: Joi.string()
             .required(),
@@ -23,12 +24,13 @@ exports.validateContractorTemplate = function (data) {
             .required(),
 
         email: Joi.string()
+            .email()
             .required(),
 
         company: Joi.string()
-            .required(),
+            .default('freelancer'),
 
-        jobList: Joi.array()
+        jobList: Joi.array().default([])
 
-    });
+    }).validate(data);
 }

@@ -7,7 +7,9 @@ const { port } = require('./Config/main.config')
 const app = express()
 
 
-app.use(express.json()).use(cors());
+app.use(cors())
+    .use(express.json())
+    .use(express.urlencoded({ extended: true }));
 
 app.use('/api', router)
 
