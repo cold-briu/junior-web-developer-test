@@ -11,12 +11,16 @@ ____
 
     Entities are defined (also known as Models)
 
+
 ### 2. Use cases: Services folder
 
     Entities are manipulated (also known as Controllers)
 
 #### 2.5 Midlewares Folder: 
 Helps communication between Services and higher layers
+
+#### 2.6 Utils Folder: 
+Helps creation and communication between Services and higher layers
 
 ### 3. Data Providers: Lib folder
 
