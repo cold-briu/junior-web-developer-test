@@ -58,5 +58,19 @@ router.route('/:id')
         }
     });
 
+router.route('/associateEmployee/:id')
+    .put(async (req, res, next) => {
+try {
+    
+    let updatedId=  await stakeholderService.associateEmployee(req.params.id,req.body)
+    res.status(200).send(updatedId).end()
+
+} catch (error) {
+    console.error("!!! err on delete", error)
+    res.status(500).send("error ocurred on associate").end()
+    next()
+}
+
+    })
 
 module.exports = router

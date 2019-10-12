@@ -9,6 +9,7 @@ exports.validateStakeholderTemplate = function (data) {
         adress,
         phone,
         email,
-        company
+        company,
+        employeesList
     }).validate(data);
 }
