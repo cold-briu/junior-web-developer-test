@@ -32,7 +32,6 @@ module.exports = class JobService {
         try {
             let jobList = await manager.getJobList(managerId)
 
-
             let updatedEmployeeId;
             jobList.map(async entry => {
                 if (entry.employeeId === employeeId && entry.active === true) {
@@ -46,6 +45,30 @@ module.exports = class JobService {
             return { manager: updatedManagerId, employee: updatedEmployeeId };
         } catch (error) {
             console.error("error inside remove emp !!! ", error)
+        }
+    }
+
+    async makeReport() {
+        try {
+            const allJobs = await manager.getAllJobs()
+            let table = []
+            allJobs.map(entry => table = table.concat(entry))
+
+            /**
+             [
+                 {
+                     manager name
+                     employee name
+                     job name
+        
+                     NEXT STEP IS TO MAKE HOURS OPERATIONS
+                 }
+             ]
+             */
+
+            return table
+        } catch (error) {
+            console.error("error inside make reprt !!! ", error)
         }
     }
 

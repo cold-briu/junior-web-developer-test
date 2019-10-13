@@ -6,8 +6,22 @@ const jobTemplate = require('../Templates/job.template')
 const JobService = require('../Services/job.service')
 const job = new JobService()
 
-router.route('/associateEmployee/:managerId')
-    .put(
+router.route('/')
+    .get(
+        async (req, res, next) => {
+            try {
+                let reportJsonTable = await job.makeReport()
+                res.status(200).send(reportJsonTable).end()
+            } catch (error) {
+                console.error("!!! err on get all jobs", error)
+                res.status(500).send("error ocurred on get all jobs").end()
+                next()
+            }
+        }
+    );
+
+router.route('/:managerId')
+    .post(
         checkDataTypes(jobTemplate),
         async (req, res, next) => {
             try {
@@ -21,7 +35,7 @@ router.route('/associateEmployee/:managerId')
             }
 
         })
-    .post(
+    .put(
         async (req, res, next) => {
             try {
                 let updatedManagerId = await job.removeEmployee(req.params.managerId, req.body.employeeId)
