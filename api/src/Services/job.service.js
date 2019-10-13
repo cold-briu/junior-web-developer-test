@@ -14,34 +14,36 @@ module.exports = class JobService {
         */
     }
 
-    associateEmployee(managerId, data) {
+    async associateEmployee(managerId, data) {
         try {
-            let jobList = manager.getJobList(managerId)
+            let jobList = await manager.getJobList(managerId)
             jobList.push(data)
-            manager.updateJobList(managerId.jobList)
 
-            let updatedManagerId = manager.updateJobList(managerId, jobList)
-            employee.setAviliableTo(data.employeeId, false)
-            return updatedManagerId;
+            let updatedManagerId = await manager.updateJobList(managerId, jobList)
+            let updatedEmployeeId = await employee.setAviliableTo(data.employeeId, false)
+            return { manager: updatedManagerId, employee: updatedEmployeeId };
+
         } catch (error) {
             console.error("error inside associate emp", error)
         }
     };
 
-    removeEmployee(managerId, employeeId) {
+    async removeEmployee(managerId, employeeId) {
         try {
-            let jobList = manager.getJobList(managerId)
+            let jobList = await manager.getJobList(managerId)
 
-            jobList.map(entry => {
+
+            let updatedEmployeeId;
+            jobList.map(async entry => {
                 if (entry.employeeId === employeeId && entry.active === true) {
                     entry.active = false
                     entry.endDate = Date.now()
-                    employee.setAviliableTo(employeeId, true)
+                    updatedEmployeeId = await employee.setAviliableTo(employeeId, true)
                 }
             })
 
-            let updatedManagerId = manager.updateJobList(managerId, jobList)
-            return updatedManagerId;
+            let updatedManagerId = await manager.updateJobList(managerId, jobList)
+            return { manager: updatedManagerId, employee: updatedEmployeeId };
         } catch (error) {
             console.error("error inside remove emp !!! ", error)
         }

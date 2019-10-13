@@ -16,16 +16,15 @@ module.exports = (data) => {
 
         startDate: Joi.number()
             .integer()
-            .default(0),
+            .default(Date.now()),
+
 
         deadLine: Joi.number()
             .integer()
             .required(),
 
         endDate: Joi.number()
-            .integer()
-            .default(Date.now()),
-
+            .integer(),
         active: Joi.boolean()
             .default(true),
 
