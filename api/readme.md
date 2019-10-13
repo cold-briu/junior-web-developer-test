@@ -49,11 +49,11 @@ ____
 
 
 # Entities 
-## Contractor 
+## Manager 
 
 Defines the owner of job.
 - Has an one to many relation with Employee trough Job entity
-- Could have a one to many relation with Job entity _(currently doesn't apply because Job Entity is inside Contractor entity)_
+- Could have a one to many relation with Job entity _(currently doesn't apply because Job Entity is inside Manager entity)_
 
 Contains personal data, company name and jobList
 
@@ -63,7 +63,7 @@ Contains personal data, company name and jobList
 ## Employee
 
 Defines the jobs maker. 
-- Has an one to one relation with Contractor entity trough Job entity
+- Has an one to one relation with Manager entity trough Job entity
 - Could have a many to one relation with Job entity _(Currently doesn't apply because Job entitity is serviceless )_
 
 Container personal data and job aviliableness
@@ -72,9 +72,9 @@ Container personal data and job aviliableness
 
 ## Job 
 
-Defines the relation between Contractor and Employee entities.
+Defines the relation between Manager and Employee entities.
 - Has an one to one relation with Employee
-- Could have an one to one relation with Contractor (currently doesn't apply)
+- Could have an one to one relation with Manager (currently doesn't apply)
 
 
 ___
@@ -83,7 +83,7 @@ ___
 
 //uix ideas 
 
-1. on left sidebar, list with contractors, top bar will say actual contractor when selected (contractor list will be hamburger menu on mobile)
+1. on left sidebar, list with managers, top bar will say actual manager when selected (manager list will be hamburger menu on mobile)
 
 2. on feed, list, squares with aviliable employees
 
