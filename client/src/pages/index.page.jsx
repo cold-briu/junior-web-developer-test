@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import employeeService from "../services/employee.service";
 
 const IndexPageSection = styled.div`
 	display: block;
@@ -26,6 +27,18 @@ const IndexContainer = styled.main`
 `;
 
 export default class Index extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+	componentDidMount() {
+		let employeesList = this.getEmployees();
+		console.log(employeesList);
+	}
+	async getEmployees() {
+		let data = await employeeService.getAll();
+		return data;
+	}
 	state = {};
 	render() {
 		return (
